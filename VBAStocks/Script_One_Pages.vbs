@@ -38,8 +38,6 @@ For I = 2 To LastRow
     If Cells(I + 1, 1).Value = Cells(I, 1).Value Then
         StockCumulative = StockCumulative + Cells(I, 7).Value
     ElseIf Cells(I + 1, 1).Value <> Cells(I, 1).Value Then
-        StockCumulative = StockCumulative + Cells(I, 7).Value
-        'This is the final time we're adding to the Stock Value.
         LastPrice = Cells(I, 6).Value
         'Since we know this is the last cell of the given ticker,
         'we can now define the ending price.
