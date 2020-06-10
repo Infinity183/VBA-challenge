@@ -40,20 +40,22 @@ Page.Range("L1").Value = "Total Stock Volume"
 
 For I = 2 To LastRow
     If Page.Cells(I + 1, 1).Value = Page.Cells(I, 1).Value Then
-        StockCumulative = StockCumulative + Cells(I, 7).Value
+        StockCumulative = StockCumulative + Page.Cells(I, 7).Value
     ElseIf Page.Cells(I + 1, 1).Value <> Page.Cells(I, 1).Value Then
+        StockCumulative = StockCumulative + Page.Cells(I, 7).Value
+        'This is the final time we're adding to the Stock Value.
         LastPrice = Page.Cells(I, 6).Value
         'Since we know this is the last cell of the given ticker,
         'we can now define the ending price.
         NetChange = LastPrice - FirstPrice
         If FirstPrice <> 0 Then
-            PercentChange = (NetChange / FirstPrice)
+            PercentChange = NetChange / FirstPrice
         ElseIf FirstPrice = 0 Then
             PercentChange = 0
         End If
         Page.Cells(StockNumber + 1, 9).Value = Page.Cells(I, 1).Value
         Page.Cells(StockNumber + 1, 10).Value = NetChange
-        Page.Cells(StockNumber + 1, 11).Value = PercentChange
+        Page.Cells(StockNumber + 1, 11).Value = FormatPercent(PercentChange)
         If PercentChange > MaxGain Then
             MaxGain = PercentChange
             Ticker1 = Page.Cells(StockNumber + 1, 9).Value
@@ -92,16 +94,29 @@ Page.Range("Q2").Value = FormatPercent(MaxGain)
 Page.Range("Q3").Value = FormatPercent(MaxLoss)
 Page.Range("Q4").Value = MaxVolume
 
+
 'Before moving on to the next sheet, we'll recolor the net change cells.
-For j = 2 To StockNumber
-    If Page.Cells(j, 10).Value > 0 Then
-        Page.Cells(j, 10).Interior.ColorIndex = 4
-    ElseIf Page.Cells(j, 10).Value < 0 Then
-        Page.Cells(j, 10).Interior.ColorIndex = 3
-    ElseIf Page.Cells(j, 10).Value = 0 Then
-        Page.Cells(j, 10).Interior.ColorIndex = 15
+For J = 2 To StockNumber
+    If Page.Cells(J, 10).Value > 0 Then
+        Page.Cells(J, 10).Interior.ColorIndex = 4
+    ElseIf Page.Cells(J, 10).Value < 0 Then
+        Page.Cells(J, 10).Interior.ColorIndex = 3
+    ElseIf Page.Cells(J, 10).Value = 0 Then
+        Page.Cells(J, 10).Interior.ColorIndex = 15
     End If
-Next j
+Next J
+
+StockNumber = 0
+StockCumulative = 0
+NetChange = 0
+PercentChange = 0
+MaxGain = 0
+MaxLoss = 0
+MaxVolume = 0
+Ticker1 = ""
+Ticker2 = ""
+Ticker3 = ""
+
 Next Page
 
 End Sub
