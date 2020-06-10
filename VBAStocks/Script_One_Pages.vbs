@@ -90,15 +90,14 @@ Range("Q4").Value = MaxVolume
 
 
 'Before moving on to the next sheet, we'll recolor the net change cells.
-For j = 2 To StockNumber
-    If Cells(j, 10).Value > 0 Then
-        Cells(j, 10).Interior.ColorIndex = 4
-    ElseIf Cells(j, 10).Value < 0 Then
-        Cells(j, 10).Interior.ColorIndex = 3
-    ElseIf Cells(j, 10).Value = 0 Then
-        Cells(j, 10).Interior.ColorIndex = 15
+For J = 2 To StockNumber
+    If Cells(J, 10).Value > 0 Then
+        Cells(J, 10).Interior.ColorIndex = 4
+    ElseIf Cells(J, 10).Value < 0 Then
+        Cells(J, 10).Interior.ColorIndex = 3
+    ElseIf Cells(J, 10).Value = 0 Then
+        Cells(J, 10).Interior.ColorIndex = 15
     End If
-Next j
+Next J
 
 End Sub
-
